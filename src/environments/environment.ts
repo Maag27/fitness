@@ -1,12 +1,15 @@
+// src/environments/environment.ts
+
 export const environment = {
     production: false,
     firebase: {
-      apiKey: "YOUR_API_KEY",
-      authDomain: "YOUR_AUTH_DOMAIN",
-      projectId: "YOUR_PROJECT_ID",
-      storageBucket: "YOUR_STORAGE_BUCKET",
-      messagingSenderId: "YOUR_MESSAGING_SENDER_ID",
-      appId: "YOUR_APP_ID"
+      apiKey: "AIzaSyAHY2y9I2ixhWGi0Ia-VR_rhs-rCo7PJg8",
+      authDomain: "fitness-b85e4.firebaseapp.com",
+      projectId: "fitness-b85e4",
+      storageBucket: "fitness-b85e4.appspot.com",
+      messagingSenderId: "676598192780",
+      appId: "1:676598192780:web:a11801150f472850ee79a9",
+      measurementId: "G-TCE3S1ZEH3"
     }
   };
   
