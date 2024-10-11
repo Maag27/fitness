@@ -1,1 +1,56 @@
-<p>register works!</p>
+<div class="video-container">
+  <video autoplay muted loop class="bg-video">
+    <source src="assets/video/fondo-register.mp4" type="video/mp4">
+    Tu navegador no soporta videos en HTML5.
+  </video>
+</div>
+
+<div class="container d-flex align-items-center justify-content-center vh-100">
+  <div class="card p-4 shadow-lg" style="max-width: 400px; width: 100%;">
+    <h2 class="text-center mb-4">Regístrate</h2>
+    <form (ngSubmit)="onRegister()" novalidate>
+      <div class="mb-3">
+        <label for="email" class="form-label">Correo Electrónico</label>
+        <input 
+          type="email" 
+          [(ngModel)]="email" 
+          name="email" 
+          class="form-control" 
+          id="email" 
+          placeholder="Ingrese su correo" 
+          required 
+          autocomplete="email">
+      </div>
+      <div class="mb-3">
+        <label for="password" class="form-label">Contraseña</label>
+        <input 
+          type="password" 
+          [(ngModel)]="password" 
+          name="password" 
+          class="form-control" 
+          id="password" 
+          placeholder="Ingrese su contraseña" 
+          required 
+          minlength="6" 
+          autocomplete="new-password">
+      </div>
+      <div *ngIf="registrationError" class="alert alert-danger" role="alert">
+        {{ registrationError }}
+      </div>
+      <div *ngIf="registrationSuccess" class="alert alert-success" role="alert">
+        {{ registrationSuccess }}
+      </div>
+      <div class="d-grid">
+        <button 
+          type="submit" 
+          class="btn btn-primary btn-block" 
+          [disabled]="password.length < 6">
+          Registrarse
+        </button>
+      </div>
+    </form>
+    <p class="text-center mt-3">
+      <button (click)="registerN()" class="btn btn-primary">Iniciar Sesion</button>
+    </p>
+  </div>
+</div>
