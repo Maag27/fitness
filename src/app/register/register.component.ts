@@ -3,6 +3,7 @@ import { Auth, createUserWithEmailAndPassword } from '@angular/fire/auth';
 import { inject } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';  // Importa CommonModule para *ngIf y otras directivas
+import { Router } from '@angular/router'; 
 
 @Component({
   selector: 'app-register',
@@ -17,8 +18,16 @@ export class RegisterComponent {
   registrationError: string | null = null;  // Variable para mostrar errores
   registrationSuccess: string | null = null;  // Variable para mostrar éxito
   private auth: Auth = inject(Auth);  // Inyecta el servicio de autenticación
+  private router: Router = inject(Router);
+
 
   constructor() {}
+
+
+
+  registerN() {
+    this.router.navigate(['/login']);
+  }
 
   onRegister() {
     if (this.password.length < 6) {

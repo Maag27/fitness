@@ -1,12 +1,56 @@
-<div>
-    <h2>Login</h2>
-    <form (ngSubmit)="onLogin()">
-      <input type="email" [(ngModel)]="email" name="email" placeholder="Email" required autocomplete="email">
-      <input type="password" [(ngModel)]="password" name="password" placeholder="Password" required minlength="6" autocomplete="current-password">
-      <button type="submit" [disabled]="password.length < 6">Login</button>
+<div class="video-container">
+  <video autoplay muted loop class="bg-video">
+    <source src="assets/video/fondo-login.mp4" type="video/mp4">
+    Tu navegador no soporta videos en HTML5.
+  </video>
+</div>
+
+<div class="container d-flex align-items-center justify-content-center vh-100">
+  <div class="card p-4 shadow-lg" style="max-width: 400px; width: 100%;">
+    <h2 class="text-center mb-4">Iniciar Sesión</h2>
+    <form (ngSubmit)="onLogin()" novalidate>
+      <div class="mb-3">
+        <label for="email" class="form-label">Correo Electrónico</label>
+        <input 
+          type="email" 
+          [(ngModel)]="email" 
+          name="email" 
+          class="form-control" 
+          id="email" 
+          placeholder="Ingrese su correo" 
+          required 
+          autocomplete="email">
+      </div>
+      <div class="mb-3">
+        <label for="password" class="form-label">Contraseña</label>
+        <input 
+          type="password" 
+          [(ngModel)]="password" 
+          name="password" 
+          class="form-control" 
+          id="password" 
+          placeholder="Ingrese su contraseña" 
+          required 
+          minlength="6" 
+          autocomplete="current-password">
+      </div>
+      <div *ngIf="loginError" class="alert alert-danger" role="alert">
+        {{ loginError }}
+      </div>
+      <div *ngIf="loginSuccess" class="alert alert-success" role="alert">
+        {{ loginSuccess }}
+      </div>
+      <div class="d-grid">
+        <button 
+          type="submit" 
+          class="btn btn-primary btn-block" 
+          [disabled]="password.length < 6">
+          Iniciar Sesión
+        </button>
+      </div>
     </form>
-    <!-- Alertas para mostrar el estado del inicio de sesión -->
-    <div *ngIf="loginError" style="color: red;">{{ loginError }}</div>
-    <div *ngIf="loginSuccess" style="color: green;">{{ loginSuccess }}</div>
+    <p class="text-center mt-3">
+      <button (click)="loginN()" class="btn btn-primary">Registrarse</button>    
+    </p>
   </div>
-  
+</div>
