@@ -1,16 +1,19 @@
+// main.ts
 import { bootstrapApplication } from '@angular/platform-browser';
-import { appConfig } from './app/app.config';
+import { provideRouter } from '@angular/router';
+import { importProvidersFrom } from '@angular/core';
 import { AppComponent } from './app/app.component';
+import { FormsModule } from '@angular/forms';
+import { provideFirebaseApp, initializeApp } from '@angular/fire/app';
+import { provideAuth, getAuth } from '@angular/fire/auth'; 
 import { environment } from './environments/environment';
+import { appRoutes } from './app/app.routes';  // Importa las rutas
 
-// Importa los módulos de Firebase
-import { initializeApp } from 'firebase/app';
-import { getAnalytics } from 'firebase/analytics';
-
-// Inicializa Firebase
-const app = initializeApp(environment.firebase);
-const analytics = getAnalytics(app);
-
-// Bootstrap de la aplicación
-bootstrapApplication(AppComponent, appConfig)
-  .catch((err) => console.error(err));
+bootstrapApplication(AppComponent, {
+  providers: [
+    importProvidersFrom(FormsModule),
+    provideRouter(appRoutes),  // Aquí es donde usas appRoutes
+    provideFirebaseApp(() => initializeApp(environment.firebase)),
+    provideAuth(() => getAuth()),  // Proveedor para el servicio de Auth
+  ],
+}).catch(err => console.error(err));

@@ -1,0 +1,12 @@
+<div>
+    <h2>Login</h2>
+    <form (ngSubmit)="onLogin()">
+      <input type="email" [(ngModel)]="email" name="email" placeholder="Email" required autocomplete="email">
+      <input type="password" [(ngModel)]="password" name="password" placeholder="Password" required minlength="6" autocomplete="current-password">
+      <button type="submit" [disabled]="password.length < 6">Login</button>
+    </form>
+    <!-- Alertas para mostrar el estado del inicio de sesión -->
+    <div *ngIf="loginError" style="color: red;">{{ loginError }}</div>
+    <div *ngIf="loginSuccess" style="color: green;">{{ loginSuccess }}</div>
+  </div>
+  
