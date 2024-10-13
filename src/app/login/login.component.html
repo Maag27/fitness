@@ -1,3 +1,4 @@
+<!-- Contenedor del video de fondo -->
 <div class="video-container">
   <video autoplay muted loop class="bg-video">
     <source src="assets/video/fondo-login.mp4" type="video/mp4">
@@ -5,12 +6,33 @@
   </video>
 </div>
 
+<!-- Título de la aplicación agregado aquí -->
+<div class="app-title text-center" style="position: absolute; top: 100px; left: 20px; color: rgb(228, 9, 9); z-index: 2;">
+  <h1 style="font-family: 'Arial', sans-serif; font-size: 3rem; font-weight: bold;">FITNESS TRACK</h1>
+</div>
+
+<!-- Contenedor principal del login, centrado vertical y horizontalmente -->
 <div class="container d-flex align-items-center justify-content-center vh-100">
-  <div class="card p-4 shadow-lg" style="max-width: 400px; width: 100%;">
-    <h2 class="text-center mb-4">Iniciar Sesión</h2>
+  <!-- Tarjeta que contiene el formulario de inicio de sesión -->
+<div class="card p-4 shadow-lg" style="max-width: 400px; width: 100%; background-color: #242424;">  <!-- Cambié a gris claro -->
+
+    
+    <!-- Título centrado del formulario -->
+    <h2 class="text-center mb-4"style="color: red;">Iniciar Sesión</h2>
+
+    <!-- Sección de la frase motivacional -->
+    <h5 class="text-center mb-2"style="color: red;">Frase motivacional</h5>
+    <p class="text-center mb-4" style="font-style: italic;"style="color: red;">
+      "La única forma de hacer un gran trabajo es amar lo que haces." Steve Jobs
+    </p>
+    
+    <!-- Formulario de inicio de sesión, que llama a la función onLogin() al enviarse -->
     <form (ngSubmit)="onLogin()" novalidate>
+      
+      <!-- Campo de correo electrónico -->
       <div class="mb-3">
-        <label for="email" class="form-label">Correo Electrónico</label>
+        <label for="email" class="form-label"style="color: red;">Correo Electrónico</label>
+        <!-- Input para el correo electrónico, con binding de ngModel -->
         <input 
           type="email" 
           [(ngModel)]="email" 
@@ -21,8 +43,11 @@
           required 
           autocomplete="email">
       </div>
+      
+      <!-- Campo de contraseña -->
       <div class="mb-3">
-        <label for="password" class="form-label">Contraseña</label>
+        <label for="password" class="form-label"style="color: red;">Contraseña</label>
+        <!-- Input para la contraseña, con binding de ngModel -->
         <input 
           type="password" 
           [(ngModel)]="password" 
@@ -34,23 +59,34 @@
           minlength="6" 
           autocomplete="current-password">
       </div>
+      
+      <!-- Mensaje de error si hay problemas en el login -->
       <div *ngIf="loginError" class="alert alert-danger" role="alert">
         {{ loginError }}
       </div>
+      
+      <!-- Mensaje de éxito si el inicio de sesión fue correcto -->
       <div *ngIf="loginSuccess" class="alert alert-success" role="alert">
         {{ loginSuccess }}
       </div>
+      
+      <!-- Botón para enviar el formulario (solo habilitado si la contraseña tiene al menos 6 caracteres) -->
       <div class="d-grid">
         <button 
           type="submit" 
-          class="btn btn-primary btn-block" 
+          class="btn btn-danger btn-block" 
           [disabled]="password.length < 6">
           Iniciar Sesión
         </button>
       </div>
     </form>
+    
+    <!-- Botón para redirigir al registro, centrado debajo del formulario -->
     <p class="text-center mt-3">
-      <button (click)="loginN()" class="btn btn-primary">Registrarse</button>    
+      <button (click)="loginN()" class="btn btn-danger">Registrarse</button>    
     </p>
+    
   </div>
 </div>
+
+

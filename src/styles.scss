@@ -1,1 +1,40 @@
+
+// Importa Bootstrap para estilos base
 @import "bootstrap/scss/bootstrap";
+
+// Estilo para el fondo de la página
+body {
+  background-image: url('assets/images/fondo-login.jpg'); /* Ruta de la imagen que usas como fondo */
+  background-size: cover; /* Asegura que la imagen cubra todo el fondo */
+  background-position: center; /* Centra la imagen en la pantalla */
+  background-repeat: no-repeat; /* Evita que la imagen se repita */
+  height: 100vh; /* El fondo ocupa toda la altura de la ventana */
+  margin: 0; /* Elimina cualquier margen de la página */
+  overflow: hidden; // Deshabilita el desplazamiento en toda la página
+}
+
+// Contenedor del login
+.container {
+  position: relative; /* Posiciona el contenedor de manera relativa */
+  z-index: 1; /* Asegura que el formulario esté por encima del fondo */
+}
+.title-container {
+    position: absolute; 
+    top: 50px; /* Ubicación del título */
+    left: 20px; 
+    color: white; 
+    font-size: 2.5rem; 
+    font-weight: bold; 
+    display: flex; 
+    align-items: center; 
+  }
+  
+  .logo {
+    width: 40px; /* Tamaño del logo */
+    height: auto; 
+    margin-left: 10px; 
+  }
+  
+  .card {
+    margin-top: -100px; /* Ajusta este valor para mover el formulario más arriba */
+  }

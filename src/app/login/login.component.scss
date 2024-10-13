@@ -1,0 +1,7 @@
+// styles.scss o login.component.scss
+
+body, html {
+    height: 100%; // Asegura que el cuerpo y el html ocupen el 100% de la altura
+    margin: 0; // Elimina el margen por defecto del body
+    overflow: hidden; // Deshabilita el desplazamiento en toda la página
+}
