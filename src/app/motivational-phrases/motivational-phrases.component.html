@@ -1,10 +1,10 @@
 <div class="d-flex justify-content-center align-items-center min-vh-100">
-    <div class="card text-center" style="width: 24rem;">
-      <div class="card-body">
-        <h2 class="card-title animate__animated animate__fadeInDown">Frase Motivacional</h2>
-        <p class="card-text animate__animated animate__fadeInUp">{{ currentPhrase }}</p>
-        <button (click)="selectRandomPhrase()" class="btn btn-primary mt-3">Cambiar Frase</button>
-      </div>
+  <div class="card text-center" style="width: 24rem;">
+    <div class="card-body">
+      <h2 class="card-title animate__animated animate__fadeInDown">Frase Motivacional</h2>
+      <p class="card-text animate__animated animate__fadeInUp">{{ currentPhrase }}</p>
+      <p class="card-subtitle text-muted animate__animated animate__fadeInUp">{{ currentAuthor }}</p>
+      <button (click)="selectRandomPhrase()" class="btn btn-primary mt-3">Cambiar Frase</button>
     </div>
   </div>
-  
+</div>
