@@ -4,11 +4,12 @@ import { RouterOutlet } from '@angular/router';
 import { CommonModule } from '@angular/common'; // Importa CommonModule
 import { FooterComponent } from "./footer/footer.component";
 import { NavbarComponent } from "./navbar/navbar.component";
+import { FormsModule } from '@angular/forms'; // Importa FormsModule
 
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [RouterOutlet, CommonModule, FooterComponent, NavbarComponent], // Asegúrate de incluir CommonModule aquí
+  imports: [RouterOutlet, CommonModule, FooterComponent, NavbarComponent, FormsModule], // Asegúrate de incluir CommonModule aquí
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.scss']
 })

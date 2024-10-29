@@ -1,0 +1,48 @@
+<!-- src/app/calculator-imc/calculator-imc.component.html -->
+<div class="d-flex justify-content-center align-items-center min-vh-100">
+  <div class="row">
+    <div class="col-md-6">
+      <div class="card text-center" style="width: 24rem;">
+        <div class="card-body">
+          <h2 class="card-title animate__animated animate__fadeInDown">Calculadora de IMC</h2>
+          <form (ngSubmit)="calculateIMC()" class="animate__animated animate__fadeInUp">
+            <div class="mb-3">
+              <label for="weight" class="form-label">Peso (kg):</label>
+              <input type="number" id="weight" [(ngModel)]="weight" name="weight" class="form-control" required>
+            </div>
+            <div class="mb-3">
+              <label for="height" class="form-label">Altura (cm):</label>
+              <input type="number" step="0.01" id="height" [(ngModel)]="height" name="height" class="form-control" required>
+            </div>
+            <button type="submit" class="btn btn-primary">Calcular IMC</button>
+          </form>
+          <div *ngIf="imc" class="mt-4 animate__animated animate__zoomIn">
+            <h3>Tu IMC es: {{ imc | number: '1.1-2' }}</h3>
+            <p>{{ imcMessage }}</p>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-6 mt-4">
+      <div class="card text-center">
+        <div class="card-body">
+          <h2 class="card-title animate__animated animate__fadeInDown">Recomendaciones</h2>
+          <div *ngIf="imcMessage" class="animate__animated animate__fadeInUp">
+            <p *ngIf="imcMessage === 'Bajo peso'">
+              Tu IMC indica que tienes bajo peso. Es recomendable que consultes con un nutricionista para un plan de alimentación que te ayude a alcanzar un peso saludable. Considera incluir más proteínas y carbohidratos en tu dieta.
+            </p>
+            <p *ngIf="imcMessage === 'Peso normal'">
+              Tu IMC es normal. ¡Genial! Mantén una dieta balanceada y un régimen de ejercicio regular para mantener tu salud.
+            </p>
+            <p *ngIf="imcMessage === 'Sobrepeso'">
+              Tu IMC indica sobrepeso. Se recomienda una dieta saludable baja en grasas y azúcares, y aumentar la actividad física diaria. Consultar a un profesional de salud puede ser una buena idea.
+            </p>
+            <p *ngIf="imcMessage === 'Obesidad'">
+              Tu IMC indica obesidad. Es importante buscar ayuda profesional para crear un plan de dieta y ejercicio adecuado a tus necesidades. La combinación de una alimentación balanceada y ejercicio regular será clave.
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

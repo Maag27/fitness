@@ -1,12 +1,6 @@
-<div class="video-container">
-  <video autoplay muted loop class="bg-video">
-    <source src="assets/video/fondo-register.mp4" type="video/mp4">
-    Tu navegador no soporta videos en HTML5.
-  </video>
-</div>
-
+<!-- src/app/register/register.component.html -->
 <div class="container d-flex align-items-center justify-content-center vh-100">
-  <div class="card p-4 shadow-lg" style="max-width: 400px; width: 100%;">
+  <div class="card p-4 shadow-lg animate__animated animate__fadeIn" style="max-width: 400px; width: 100%;">
     <h2 class="text-center mb-4">Regístrate</h2>
     <form (ngSubmit)="onRegister()" novalidate>
       <div class="mb-3">
@@ -19,7 +13,8 @@
           id="email" 
           placeholder="Ingrese su correo" 
           required 
-          autocomplete="email">
+          autocomplete="email"
+        >
       </div>
       <div class="mb-3">
         <label for="password" class="form-label">Contraseña</label>
@@ -32,7 +27,8 @@
           placeholder="Ingrese su contraseña" 
           required 
           minlength="6" 
-          autocomplete="new-password">
+          autocomplete="new-password"
+        >
       </div>
       <div *ngIf="registrationError" class="alert alert-danger" role="alert">
         {{ registrationError }}
@@ -43,14 +39,15 @@
       <div class="d-grid">
         <button 
           type="submit" 
-          class="btn btn-primary btn-block" 
-          [disabled]="password.length < 6">
+          class="btn btn-primary btn-block"
+          [disabled]="password.length < 6"
+        >
           Registrarse
         </button>
       </div>
     </form>
     <p class="text-center mt-3">
-      <button (click)="registerN()" class="btn btn-primary">Iniciar Sesion</button>
+      <button (click)="registerN()" class="btn btn-primary">Iniciar Sesión</button>
     </p>
   </div>
 </div>
