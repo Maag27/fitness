@@ -61,6 +61,42 @@
       </div>
     </div>
   </div>
+  <!-- IMC Calculator Section -->
+<div class="mt-5">
+  <h2>Calculadora de IMC</h2>
+  <form (ngSubmit)="calculateIMC()">
+    <div class="mb-3">
+      <label for="weight" class="form-label">Peso (kg)</label>
+      <input type="number" class="form-control" id="weight" [(ngModel)]="weight" name="weight" required>
+    </div>
+    <div class="mb-3">
+      <label for="height" class="form-label">Altura (cm)</label>
+      <input type="number" class="form-control" id="height" [(ngModel)]="height" name="height" required>
+    </div>
+    <div class="mb-3">
+      <label for="age" class="form-label">Edad</label>
+      <input type="number" class="form-control" id="age" [(ngModel)]="age" name="age" required>
+    </div>
+    <div class="mb-3">
+      <label class="form-label">Sexo</label>
+      <div>
+        <input type="radio" id="male" [(ngModel)]="gender" name="gender" value="Masculino" required>
+        <label for="male">Masculino</label>
+      </div>
+      <div>
+        <input type="radio" id="female" [(ngModel)]="gender" name="gender" value="Femenino" required>
+        <label for="female">Femenino</label>
+      </div>
+    </div>
+    <button type="submit" class="btn btn-primary">Calcular IMC</button>
+  </form>
+
+  <div *ngIf="imc" class="mt-3">
+    <h3>Tu IMC: {{ imc }}</h3>
+    <p>{{ imcMessage }}</p>
+  </div>
+</div>
+
 
   <!-- Contact Form -->
   <div class="mt-5">
