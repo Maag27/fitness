@@ -1,6 +1,6 @@
-import { ApplicationConfig, provideZoneChangeDetection } from '@angular/core';
+import { ApplicationConfig } from '@angular/platform-browser';
 import { provideRouter } from '@angular/router';
-import { importProvidersFrom } from '@angular/core';
+import { importProvidersFrom, provideZoneChangeDetection } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 
 import { appRoutes } from './app.routes';

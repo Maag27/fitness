@@ -3,8 +3,10 @@
   <div class="card p-4 shadow-lg animate__animated animate__fadeIn" style="max-width: 400px; width: 100%;">
     <h2 class="text-center mb-4">Regístrate</h2>
     <form (ngSubmit)="onRegister()" novalidate>
+      
+      <!-- Campo de correo electrónico -->
       <div class="mb-3">
-        <label for="email" class="form-label">Correo Electrónico</label>
+        <label for="email" class="form-label" style="color: red;">Correo Electrónico</label>
         <input 
           type="email" 
           [(ngModel)]="email" 
@@ -16,8 +18,10 @@
           autocomplete="email"
         >
       </div>
+      
+      <!-- Campo de contraseña -->
       <div class="mb-3">
-        <label for="password" class="form-label">Contraseña</label>
+        <label for="password" class="form-label" style="color: red;">Contraseña</label>
         <input 
           type="password" 
           [(ngModel)]="password" 
@@ -30,12 +34,18 @@
           autocomplete="new-password"
         >
       </div>
+      
+      <!-- Mensaje de error si hay problemas en el registro -->
       <div *ngIf="registrationError" class="alert alert-danger" role="alert">
         {{ registrationError }}
       </div>
+      
+      <!-- Mensaje de éxito si el registro fue correcto -->
       <div *ngIf="registrationSuccess" class="alert alert-success" role="alert">
         {{ registrationSuccess }}
       </div>
+      
+      <!-- Botón para enviar el formulario (solo habilitado si la contraseña tiene al menos 6 caracteres) -->
       <div class="d-grid">
         <button 
           type="submit" 
@@ -46,8 +56,12 @@
         </button>
       </div>
     </form>
+    
+    <!-- Botón para redirigir al inicio de sesión, centrado debajo del formulario -->
     <p class="text-center mt-3">
       <button (click)="registerN()" class="btn btn-primary">Iniciar Sesión</button>
     </p>
+    
   </div>
 </div>
+
