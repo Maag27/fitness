@@ -1,7 +1,7 @@
 <!-- src/app/calculator-imc/calculator-imc.component.html -->
 <div class="d-flex justify-content-center align-items-center min-vh-100">
-  <div class="row">
-    <div class="col-md-6">
+  <div class="row w-100">
+    <div class="col-md-6 mb-4">
       <div class="card text-center" style="width: 24rem;">
         <div class="card-body">
           <h2 class="card-title animate__animated animate__fadeInDown">Calculadora de IMC</h2>
@@ -23,10 +23,10 @@
         </div>
       </div>
     </div>
-    <div class="col-md-6 mt-4">
+    <div class="col-md-6 mb-4">
       <div class="card text-center">
         <div class="card-body">
-          <h2 class="card-title animate__animated animate__fadeInDown">Recomendaciones</h2>
+          <h2 class="card-title animate__animated animate__fadeInDown">Recuerda</h2>
           <div *ngIf="imcMessage" class="animate__animated animate__fadeInUp">
             <p *ngIf="imcMessage === 'Bajo peso'">
               Tu IMC indica que tienes bajo peso. Es recomendable que consultes con un nutricionista para un plan de alimentación que te ayude a alcanzar un peso saludable. Considera incluir más proteínas y carbohidratos en tu dieta.

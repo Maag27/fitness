@@ -1,10 +1,11 @@
 import { Component } from '@angular/core';
 import { CalculatorIMCComponent } from "../calculator-imc/calculator-imc.component";
+import { MotivationalPhrasesComponent } from '../motivational-phrases/motivational-phrases.component';
 
 @Component({
   selector: 'app-home',
   standalone: true,
-  imports: [CalculatorIMCComponent],
+  imports: [CalculatorIMCComponent, MotivationalPhrasesComponent],
   templateUrl: './home.component.html',
   styleUrls: ['./home.component.scss']
 })
