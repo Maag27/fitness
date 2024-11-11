@@ -1,0 +1,21 @@
+/* src/app/motivational-phrases/motivational-phrases.component.scss */
+@import "https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css";
+
+.d-flex {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+}
+
+.card {
+  width: 24rem;
+}
+
+.card-title {
+  font-size: 1.5rem;
+}
+
+.btn-primary {
+  margin-top: 1rem;
+}
