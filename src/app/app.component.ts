@@ -14,9 +14,8 @@ import { FormsModule } from '@angular/forms'; // Importa FormsModule
   styleUrls: ['./app.component.scss']
 })
 export class AppComponent {
-  title = 'fitness';
+  title = 'Fitness Tracking';
   showNavbarFooter: boolean = true;
-
   constructor(private router: Router) {
     this.router.events.subscribe(event => {
       if (event instanceof NavigationEnd) {

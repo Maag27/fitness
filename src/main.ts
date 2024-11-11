@@ -1,3 +1,4 @@
+// src/main.ts
 import { bootstrapApplication } from '@angular/platform-browser';
 import { importProvidersFrom } from '@angular/core';
 import { AppComponent } from './app/app.component';
@@ -8,10 +9,12 @@ import { environment } from './environments/environment';
 import { appRoutes } from './app/app.routes';
 import { provideRouter } from '@angular/router';
 import { provideFirestore, getFirestore } from '@angular/fire/firestore';
+import { provideHttpClient, withFetch } from '@angular/common/http';
 
 bootstrapApplication(AppComponent, {
   providers: [
-    FormsModule,
+    provideHttpClient(withFetch()),
+    importProvidersFrom(FormsModule), // Asegúrate de importar FormsModule correctamente
     provideRouter(appRoutes),
     provideFirebaseApp(() => initializeApp(environment.firebase)),
     provideAuth(() => getAuth()),

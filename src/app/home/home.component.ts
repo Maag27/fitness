@@ -1,19 +1,19 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { CalculatorIMCComponent } from "../calculator-imc/calculator-imc.component";
-import { HttpClientModule } from '@angular/common/http';
 import { ApiService } from '../services/api.service';
 import { FormsModule } from '@angular/forms';
 import { AuthService } from '../services/auth.service'; // Importamos el AuthService
+import { MotivationalPhrasesComponent } from '../motivational-phrases/motivational-phrases.component';
 
 @Component({
   selector: 'app-home',
   standalone: true,
   imports: [
     CommonModule,
-    HttpClientModule,
     CalculatorIMCComponent,
-    FormsModule
+    FormsModule,
+    MotivationalPhrasesComponent
   ],
   providers: [ApiService],
   templateUrl: './home.component.html',
