@@ -1,2 +1,41 @@
 <!-- src/app/home/home.component.html -->
 <app-calculator-imc></app-calculator-imc>
+
+
+<div class="container">
+  <h2>Métricas del Usuario</h2>
+
+  <form (ngSubmit)="onSubmit()">
+    <div>
+      <label for="nombre">Nombre:</label>
+      <input type="text" id="nombre" [(ngModel)]="nombre" name="nombre">
+    </div>
+
+    <div>
+      <label for="apellido">Apellido:</label>
+      <input type="text" id="apellido" [(ngModel)]="apellido" name="apellido">
+    </div>
+
+    <div>
+      <label for="edad">Edad:</label>
+      <input type="number" id="edad" [(ngModel)]="edad" name="edad">
+    </div>
+
+    <div>
+      <label for="altura">Altura (cm):</label>
+      <input type="number" id="altura" [(ngModel)]="altura" name="altura">
+    </div>
+
+    <div>
+      <label for="peso">Peso (kg):</label>
+      <input type="number" id="peso" [(ngModel)]="peso" name="peso">
+    </div>
+
+    <button type="submit">Guardar Cambios</button>
+  </form>
+
+  <div *ngIf="estadisticas">
+    <h3>Estadísticas Guardadas</h3>
+    <pre>{{ estadisticas | json }}</pre>
+  </div>
+</div>

@@ -1,55 +1,104 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
+import { CommonModule } from '@angular/common';
 import { CalculatorIMCComponent } from "../calculator-imc/calculator-imc.component";
+import { HttpClientModule } from '@angular/common/http';
+import { ApiService } from '../services/api.service';
+import { FormsModule } from '@angular/forms';
+import { AuthService } from '../services/auth.service'; // Importamos el AuthService
 
 @Component({
   selector: 'app-home',
   standalone: true,
-  imports: [CalculatorIMCComponent],
+  imports: [
+    CommonModule,
+    HttpClientModule,
+    CalculatorIMCComponent,
+    FormsModule
+  ],
+  providers: [ApiService],
   templateUrl: './home.component.html',
   styleUrls: ['./home.component.scss']
 })
-export class HomeComponent {
-  weight: number | null = null; // Peso del usuario
-  height: number | null = null; // Altura del usuario
-  age: number | null = null; // Edad del usuario
-  gender: string | null = null; // Sexo del usuario
-  imc: number | null = null; // Valor del IMC calculado
-  imcMessage: string = ''; // Mensaje descriptivo basado en el IMC
+export class HomeComponent implements OnInit {
+  nombre: string = '';
+  apellido: string = '';
+  edad: number = 0;
+  altura: number = 0;
+  peso: number = 0;
+  estadisticas: any;
 
-  calculateIMC(): void {
-    // Validar que se haya ingresado peso y altura
-    if (this.weight !== null && this.height !== null && this.height > 0) {
-      // Convertir la altura de centímetros a metros
-      const heightInMeters = this.height / 100;
-      // Calcular el IMC
-      this.imc = +(this.weight / (heightInMeters * heightInMeters)).toFixed(2);
+  constructor(private apiService: ApiService, private authService: AuthService) {}
 
-      // Establecer el mensaje basado en el valor del IMC
-      this.imcMessage = this.getIMCMessage(this.imc);
-    } else {
-      this.imc = null; // Restablecer el IMC si los datos son inválidos
-      this.imcMessage = 'Por favor, ingresa un peso y una altura válidos.';
-    }
+  ngOnInit(): void {
+    // Cargamos las estadísticas del usuario al iniciar el componente
+    this.loadUserMetrics();
   }
 
-  private getIMCMessage(imc: number | null): string {
-    if (imc === null) return ''; // Si el IMC no está calculado, retornar vacío
-    if (imc < 16) {
-      return 'Delgadez severa';
-    } else if (imc >= 16 && imc < 16.9) {
-      return 'Delgadez moderada';
-    } else if (imc >= 17 && imc < 18.4) {
-      return 'Delgadez leve';
-    } else if (imc >= 18.5 && imc < 24.9) {
-      return 'Peso normal';
-    } else if (imc >= 25 && imc < 29.9) {
-      return 'Sobrepeso';
-    } else if (imc >= 30 && imc < 34.9) {
-      return 'Obesidad tipo 1';
-    } else if (imc >= 35 && imc < 39.9) {
-      return 'Obesidad tipo 2';
-    } else {
-      return 'Obesidad tipo 3 (mórbida)';
-    }
+  // Cargar métricas del usuario autenticado y mostrar en el formulario
+  loadUserMetrics(): void {
+    console.log('Cargando métricas del usuario...');
+
+    this.apiService.getUserMetrics().subscribe(
+      (data: any) => { // Se asigna tipo any a data
+        console.log('Métricas del usuario recibidas:', data);
+        if (data && data.length > 0) { // Si se encuentran datos, llenamos el formulario
+          const metrics = data[0];
+          this.nombre = metrics.nombre || '';
+          this.apellido = metrics.apellido || '';
+          this.edad = metrics.edad || 0;
+          this.altura = metrics.altura || 0;
+          this.peso = metrics.peso || 0;
+          this.estadisticas = data; // Guardamos todas las métricas en estadisticas para mostrarlas
+        } else {
+          console.warn('No se encontraron métricas para el usuario.');
+        }
+      },
+      (error: any) => { // Se asigna tipo any a error
+        console.error('Error al cargar las métricas del usuario:', error);
+      }
+    );
+  }
+
+  // Método para agregar o actualizar los datos del usuario
+// Método para agregar o actualizar los datos del usuario
+saveUserMetrics(): void {
+  const userMetric = {
+      nombre: this.nombre,  
+      apellido: this.apellido, 
+      edad: this.edad,
+      altura: this.altura,
+      peso: this.peso
+  };
+
+  console.log('Guardando métricas del usuario:', userMetric);
+
+  this.apiService.addUserMetric(userMetric).subscribe(
+      (response: any) => {
+          console.log('Datos del usuario actualizados:', response);
+          this.loadUserMetrics();
+      },
+      (error: any) => {
+          console.error('Error al actualizar datos del usuario:', error);
+      }
+  );
+}
+
+  // Método para cargar estadísticas adicionales si se requiere
+  getUserStatistics(): void {
+    console.log('Obteniendo estadísticas del usuario:', this.nombre, this.apellido);
+
+    this.apiService.getUserStatistics(this.nombre, this.apellido).subscribe(
+      (data: any) => { // Se asigna tipo any a data
+        console.log('Estadísticas del usuario recibidas:', data);
+        this.estadisticas = data;
+      },
+      (error: any) => { // Se asigna tipo any a error
+        console.error('Error al obtener estadísticas del usuario:', error);
+      }
+    );
+  }
+
+  onSubmit(): void {
+    this.saveUserMetrics();
   }
 }
