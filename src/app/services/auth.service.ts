@@ -1,3 +1,4 @@
+// src/app/services/auth.service.ts
 import { Injectable } from '@angular/core';
 import { Auth, signInWithEmailAndPassword, createUserWithEmailAndPassword } from '@angular/fire/auth';
 import { from, Observable } from 'rxjs';
@@ -49,5 +50,5 @@ export class AuthService {
   isAuthenticated(): boolean {
     // Verificamos si hay un userId en memoria o en localStorage
     return this.userId !== null || localStorage.getItem('userId') !== null;
-  }  
+  }
 }
