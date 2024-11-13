@@ -1,4 +1,3 @@
-<!-- src/app/navbar/navbar.component.html -->
 <nav class="navbar navbar-expand-lg navbar-dark" style="background-color: rgba(255, 0, 0, 0.49);">
   <div class="container-fluid">
     <a class="navbar-brand text-black" href="#">Fitness</a>
@@ -7,6 +6,9 @@
     </button>
     <div class="collapse navbar-collapse" id="navbarNav">
       <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+        <li class="nav-item" *ngIf="isAuthenticated()">
+          <button class="btn btn-danger" (click)="onLogout()">Cerrar Sesión</button>
+        </li>
       </ul>
     </div>
   </div>
