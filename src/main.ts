@@ -9,12 +9,12 @@ import { environment } from './environments/environment';
 import { appRoutes } from './app/app.routes';
 import { provideRouter } from '@angular/router';
 import { provideFirestore, getFirestore } from '@angular/fire/firestore';
-import { provideHttpClient, withFetch } from '@angular/common/http';
+import { provideHttpClient, withFetch, withInterceptorsFromDi } from '@angular/common/http';
 
 bootstrapApplication(AppComponent, {
   providers: [
-    provideHttpClient(withFetch()),
-    importProvidersFrom(FormsModule), // Asegúrate de importar FormsModule correctamente
+    provideHttpClient(withFetch(), withInterceptorsFromDi()),
+    importProvidersFrom(FormsModule),
     provideRouter(appRoutes),
     provideFirebaseApp(() => initializeApp(environment.firebase)),
     provideAuth(() => getAuth()),
