@@ -1,0 +1,38 @@
+<div class="routine-form">
+    <h2>Crear Nueva Rutina</h2>
+    <form [formGroup]="routineForm" (ngSubmit)="saveRoutine()">
+      <div>
+        <label>Nombre de la Rutina:</label>
+        <input formControlName="name" type="text" placeholder="Nombre de la rutina" />
+      </div>
+  
+      <div>
+        <label>Grupo Muscular:</label>
+        <input formControlName="muscleGroup" type="text" placeholder="Ejemplo: Pecho, Piernas" />
+      </div>
+  
+      <h3>Ejercicios</h3>
+      <button type="button" (click)="addExercise()">Agregar Ejercicio</button>
+  
+      <div formArrayName="exercises" *ngFor="let exercise of exercises.controls; let i = index" class="exercise-form">
+        <div [formGroupName]="i">
+          <label>Nombre del Ejercicio:</label>
+          <input formControlName="name" type="text" placeholder="Nombre del ejercicio" />
+  
+          <label>Tiempo:</label>
+          <input formControlName="time" type="text" placeholder="Tiempo (min)" />
+  
+          <label>Repeticiones:</label>
+          <input formControlName="repetitions" type="number" placeholder="Repeticiones" />
+  
+          <label>Calentamiento:</label>
+          <input formControlName="warmup" type="text" placeholder="Calentamiento (sí o no)" />
+  
+          <button type="button" (click)="removeExercise(i)">Eliminar Ejercicio</button>
+        </div>
+      </div>
+  
+      <button type="submit">Guardar Rutina</button>
+    </form>
+  </div>
+  

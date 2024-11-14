@@ -30,9 +30,14 @@
           id="password" 
           placeholder="Ingrese su contraseña" 
           required 
-          minlength="6" 
           autocomplete="new-password"
+          (input)="validatePassword()"
         >
+      </div>
+
+      <!-- Mensaje de validación de contraseña -->
+      <div *ngIf="passwordError" class="text-danger">
+        {{ passwordError }}
       </div>
       
       <!-- Mensaje de error si hay problemas en el registro -->
@@ -45,12 +50,12 @@
         {{ registrationSuccess }}
       </div>
       
-      <!-- Botón para enviar el formulario (solo habilitado si la contraseña tiene al menos 6 caracteres) -->
+      <!-- Botón para enviar el formulario (solo habilitado si la contraseña pasa la validación) -->
       <div class="d-grid">
         <button 
           type="submit" 
           class="btn btn-primary btn-block"
-          [disabled]="password.length < 6"
+          [disabled]="!isPasswordValid"
         >
           Registrarse
         </button>
@@ -64,4 +69,3 @@
     
   </div>
 </div>
-

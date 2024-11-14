@@ -17,25 +17,44 @@ export class RegisterComponent {
   password: string = '';
   registrationError: string | null = null;  // Variable para mostrar errores
   registrationSuccess: string | null = null;  // Variable para mostrar éxito
+  passwordError: string = '';  // Variable para mostrar errores de la contraseña
+  isPasswordValid: boolean = false;  // Estado de validación de la contraseña
   private auth: Auth = inject(Auth);  // Inyecta el servicio de autenticación
   private router: Router = inject(Router);
 
-
   constructor() {}
-
-
 
   registerN() {
     this.router.navigate(['/login']);
   }
 
+  // Método para validar la contraseña
+  validatePassword() {
+    const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*])[A-Za-z\d!@#$%^&*]{8,}$/;
+    if (this.password.includes(' ')) {
+      this.passwordError = 'La contraseña no debe contener espacios en blanco.';
+      this.isPasswordValid = false;
+    } else if (!passwordRegex.test(this.password)) {
+      this.passwordError = 'La contraseña debe tener al menos 8 caracteres, una letra mayúscula, una letra minúscula, un número y un carácter especial.';
+      this.isPasswordValid = false;
+    } else {
+      this.passwordError = '';
+      this.isPasswordValid = true;
+    }
+  }
+
+  // Método para el registro del usuario
   onRegister() {
-    if (this.password.length < 6) {
-      this.registrationError = 'Password must be at least 6 characters long.';
+    // Llama al método de validación de la contraseña
+    this.validatePassword();
+
+    // Verifica si la contraseña es válida antes de proceder
+    if (!this.isPasswordValid) {
       this.registrationSuccess = null;  // Limpiar mensaje de éxito
       return;
     }
 
+    // Registra al usuario usando Firebase Authentication
     createUserWithEmailAndPassword(this.auth, this.email, this.password)
       .then(result => {
         this.registrationError = null;  // Limpiar errores previos
@@ -57,3 +76,4 @@ export class RegisterComponent {
       });
   }
 }
+

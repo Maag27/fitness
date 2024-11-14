@@ -1,0 +1,26 @@
+.routine-form {
+    max-width: 500px;
+    margin: 0 auto;
+    padding: 1rem;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+  }
+  
+  .exercise-form {
+    margin-bottom: 1rem;
+    padding: 0.5rem;
+    border-bottom: 1px solid #ccc;
+  }
+  
+  label {
+    display: block;
+    font-weight: bold;
+    margin-top: 0.5rem;
+  }
+  
+  input {
+    width: 100%;
+    padding: 0.5rem;
+    margin-top: 0.25rem;
+  }
+  

@@ -5,6 +5,7 @@ import { ApiService } from '../services/api.service';
 import { FormsModule } from '@angular/forms';
 import { AuthService } from '../services/auth.service';
 import { MotivationalPhrasesComponent } from '../motivational-phrases/motivational-phrases.component';
+import { CarboxComponent } from '../carbox/carbox.component'; // Importa CarboxComponent
 
 @Component({
   selector: 'app-home',
@@ -13,7 +14,8 @@ import { MotivationalPhrasesComponent } from '../motivational-phrases/motivation
     CommonModule,
     CalculatorIMCComponent,
     FormsModule,
-    MotivationalPhrasesComponent
+    MotivationalPhrasesComponent,
+    CarboxComponent
   ],
   providers: [ApiService],
   templateUrl: './home.component.html',
