@@ -1,58 +1,22 @@
-<!-- src/app/carbox/carbox.component.html -->
-<div class="routine-form">
-  <h2>Crear Nueva Rutina</h2>
-  <form [formGroup]="routineForm" (ngSubmit)="saveRoutine()">
-    <!-- Seleccionar Grupo Muscular -->
-    <div>
-      <label>Grupo Muscular:</label>
-      <select formControlName="muscleGroup">
-        <option value="">Selecciona un grupo muscular</option>
-        <option *ngFor="let group of muscleGroups" [value]="group.id">
-          {{ group.name }}
-        </option>
-      </select>
+<div class="container">
+  <div class="row">
+    <div class="col-md-6">
+      <h3>Crear Nueva Rutina</h3>
+      <form [formGroup]="routineForm" (ngSubmit)="saveRoutine()">
+        <select id="muscleGroup" formControlName="muscleGroup" class="form-control mb-2">
+          <option value="">Selecciona un grupo muscular</option>
+          <option *ngFor="let group of muscleGroups" [value]="group.id">{{ group.name }}</option>
+        </select>
+        <select id="exercise" formControlName="exercise" class="form-control mb-2">
+          <option value="">Selecciona un ejercicio</option>
+          <option *ngFor="let exercise of availableExercises" [value]="exercise.id">{{ exercise.name }}</option>
+        </select>
+        <button type="submit" class="btn btn-primary w-100">Guardar</button>
+      </form>
     </div>
-
-    <!-- Seleccionar Ejercicio (siempre visible) -->
-    <div>
-      <label>Ejercicio:</label>
-      <select formControlName="exercise">
-        <option value="">Selecciona un ejercicio</option>
-        <option *ngFor="let exercise of availableExercises" [value]="exercise.id">
-          {{ exercise.name }}
-        </option>
-      </select>
-    </div>
-
-    <!-- Campo de Repeticiones, Series, Tiempo de Descanso -->
-    <div *ngIf="routineForm.get('exercise')?.value">
-      <label>Repeticiones:</label>
-      <input formControlName="repetitions" type="number" placeholder="Número de repeticiones" />
-
-      <label>Series:</label>
-      <input formControlName="series" type="number" placeholder="Número de series" />
-
-      <label>Tiempo de Descanso (segundos):</label>
-      <input formControlName="restTime" type="number" placeholder="Tiempo de descanso" />
-    </div>
-
-    <button type="submit" [disabled]="!routineForm.valid">Guardar Rutina</button>
-  </form>
-
-  <!-- Sección para mostrar rutinas guardadas -->
-  <div *ngIf="savedRoutines.length > 0" class="saved-routines">
-    <h3>Rutinas Guardadas</h3>
-    <div *ngFor="let routine of savedRoutines" class="routine-item">
-      <div class="routine-info">
-        <span>Grupo Muscular: {{ routine.muscleGroupName }}</span>
-        <span>Ejercicio: {{ routine.exerciseName }}</span>
-        <span>{{ routine.repetitions }} repeticiones</span>
-        <span>{{ routine.series }} series</span>
-        <span>{{ routine.restTime }} segundos de descanso</span>
-      </div>
-      <button (click)="deleteRoutine(routine.id)" class="delete-btn">
-        Eliminar
-      </button>
+    <div class="col-md-6">
+      <!-- Tabla de rutinas usando el componente RoutineTable -->
+      <app-routine-table [savedRoutines]="savedRoutines"></app-routine-table>
     </div>
   </div>
 </div>

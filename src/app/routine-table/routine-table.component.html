@@ -1,0 +1,43 @@
+<div class="container">
+    <div class="row">
+      <div *ngFor="let routine of savedRoutines; let i = index" class="col-md-6 mb-4">
+        <div class="card text-center border-info">
+          <div class="card-body">
+            <h5 class="card-title">{{ routine.exerciseName }}</h5>
+            <p class="card-text">
+              <strong>Grupo Muscular:</strong> {{ routine.muscleGroupName }}<br />
+              <!-- Campo editable para Repeticiones -->
+              <strong>Repeticiones:</strong>
+              <input
+                type="text"
+                class="form-control d-inline-block w-75"
+                [value]="routine.repetitions"
+                (blur)="updateRoutineField(routine.id, 'repetitions', $event)"
+              />
+              <br />
+              <!-- Campo editable para Series -->
+              <strong>Series:</strong>
+              <input
+                type="number"
+                class="form-control d-inline-block w-75"
+                [value]="routine.series"
+                (blur)="updateRoutineField(routine.id, 'series', $event)"
+              />
+              <br />
+              <!-- Campo editable para Tiempo de Descanso -->
+              <strong>Descanso:</strong>
+              <input
+                type="text"
+                class="form-control d-inline-block w-75"
+                [value]="routine.restTime"
+                (blur)="updateRoutineField(routine.id, 'restTime', $event)"
+              />
+            </p>
+            <button class="btn btn-warning btn-sm me-2" (click)="editRoutine(routine)">Editar</button>
+            <button class="btn btn-danger btn-sm" (click)="deleteRoutine(routine.id)">Eliminar</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  
