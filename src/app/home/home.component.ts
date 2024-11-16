@@ -6,6 +6,8 @@ import { AuthService } from '../services/auth.service';
 import { MotivationalPhrasesComponent } from '../motivational-phrases/motivational-phrases.component';
 import { CarboxComponent } from '../carbox/carbox.component';
 import { MetricsService } from '../services/metrics.service';
+import { RoutineTableComponent } from '../routine-table/routine-table.component';
+
 
 @Component({
   selector: 'app-home',
@@ -15,12 +17,14 @@ import { MetricsService } from '../services/metrics.service';
     CalculatorIMCComponent,
     FormsModule,
     MotivationalPhrasesComponent,
-    CarboxComponent
+    CarboxComponent,
+    RoutineTableComponent
   ],
   templateUrl: './home.component.html',
   styleUrls: ['./home.component.scss']
 })
 export class HomeComponent implements OnInit {
+  savedRoutines: any[] = []; // Rutinas guardadas
   nombre: string = '';
   apellido: string = '';
   edad: number = 0;
@@ -30,6 +34,16 @@ export class HomeComponent implements OnInit {
   isEditing: boolean = false;
 
   constructor(private metricsService: MetricsService, private authService: AuthService) {}
+
+  // Método para recibir nuevas rutinas desde CarboxComponent
+  onRoutineCreated(routine: any) {
+    this.savedRoutines = [...this.savedRoutines, routine]; // Añadir nueva rutina creando un nuevo array
+  }
+
+  // Método para eliminar una rutina usando su ID
+  onDeleteRoutine(routineId: number) {
+    this.savedRoutines = this.savedRoutines.filter(routine => routine.id !== routineId);
+  }
 
   ngOnInit(): void {
     this.loadUserMetrics();

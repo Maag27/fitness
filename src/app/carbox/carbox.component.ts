@@ -1,21 +1,20 @@
-import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, ReactiveFormsModule } from '@angular/forms';
-import { CommonModule } from '@angular/common';
+import { Component, OnInit, Output, EventEmitter } from '@angular/core';
+import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { RoutinesService } from '../services/routines.service';
-import { RoutineTableComponent } from '../routine-table/routine-table.component';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-carbox',
   standalone: true,
-  imports: [CommonModule, ReactiveFormsModule, RoutineTableComponent],
+  imports: [CommonModule, FormsModule, ReactiveFormsModule],
   templateUrl: './carbox.component.html',
   styleUrls: ['./carbox.component.scss'],
 })
 export class CarboxComponent implements OnInit {
+  @Output() routineCreated = new EventEmitter<any>(); // Emisor para enviar rutinas al componente padre
   routineForm: FormGroup;
   muscleGroups: any[] = [];
   availableExercises: any[] = [];
-  savedRoutines: any[] = [];
 
   constructor(private fb: FormBuilder, private routinesService: RoutinesService) {
     this.routineForm = this.fb.group({
@@ -45,8 +44,6 @@ export class CarboxComponent implements OnInit {
           series: details?.series || '',
           restTime: details?.restTime || '',
         });
-      } else {
-        this.routineForm.patchValue({ repetitions: '', series: '', restTime: '' });
       }
     });
   }
@@ -65,7 +62,7 @@ export class CarboxComponent implements OnInit {
       this.availableExercises = data.map((ex: any) => ({
         id: ex.exerciseTemplateId,
         name: ex.exerciseName,
-        exerciseDetails: ex.exerciseDetails, // Mantener la estructura de detalles
+        exerciseDetails: ex.exerciseDetails,
       }));
     });
   }
@@ -83,7 +80,7 @@ export class CarboxComponent implements OnInit {
       restTime: this.routineForm.value.restTime,
     };
 
-    this.savedRoutines.push(newRoutine);
+    this.routineCreated.emit(newRoutine); // Emitir rutina creada
     this.routineForm.reset({ muscleGroup: '', exercise: '' });
   }
 }

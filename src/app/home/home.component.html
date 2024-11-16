@@ -1,4 +1,3 @@
-<!-- src/app/home/home.component.html -->
 <div class="container mt-4">
   <h2 class="text-danger mb-4">Métricas del Usuario</h2>
 
@@ -7,38 +6,41 @@
       <label for="nombre" class="form-label text-danger">Nombre:</label>
       <input type="text" id="nombre" [(ngModel)]="nombre" name="nombre" class="form-control" [readonly]="!isEditing">
     </div>
-
     <div class="col-md-6">
       <label for="apellido" class="form-label text-danger">Apellido:</label>
       <input type="text" id="apellido" [(ngModel)]="apellido" name="apellido" class="form-control" [readonly]="!isEditing">
     </div>
-
     <div class="col-md-4">
       <label for="edad" class="form-label text-danger">Edad:</label>
       <input type="number" id="edad" [(ngModel)]="edad" name="edad" class="form-control" [readonly]="!isEditing">
     </div>
-
     <div class="col-md-4">
       <label for="altura" class="form-label text-danger">Altura (cm):</label>
       <input type="number" id="altura" [(ngModel)]="altura" name="altura" class="form-control" [readonly]="!isEditing">
     </div>
-
     <div class="col-md-4">
       <label for="peso" class="form-label text-danger">Peso (kg):</label>
       <input type="number" id="peso" [(ngModel)]="peso" name="peso" class="form-control" [readonly]="!isEditing">
     </div>
-
     <div class="col-12 text-end mt-3">
       <button type="button" class="btn btn-outline-danger me-2" (click)="toggleEdit()" *ngIf="!isEditing">Editar</button>
       <button type="submit" class="btn btn-danger" *ngIf="isEditing">Guardar Cambios</button>
     </div>
   </form>
 
- <!--<div *ngIf="estadisticas" class="mt-4">
-    <h3 class="text-danger">Estadísticas Guardadas</h3>
-    <pre>{{ estadisticas | json }}</pre>
-  </div> -->
-</div>
-<app-carbox></app-carbox>
-<app-motivational-phrases></app-motivational-phrases>
-<app-calculator-imc></app-calculator-imc>
+  <app-motivational-phrases></app-motivational-phrases>
+  <app-calculator-imc></app-calculator-imc>
+
+  <!-- Formulario de creación de rutinas -->
+  <div class="row mb-4">
+    <div class="col-md-12">
+      <app-carbox (routineCreated)="onRoutineCreated($event)"></app-carbox>
+    </div>
+  </div>
+
+  <!-- Sección de rutinas guardadas -->
+
+        <app-routine-table 
+          [savedRoutines]="savedRoutines" 
+          (deleteRoutineEvent)="onDeleteRoutine($event)">
+        </app-routine-table>
