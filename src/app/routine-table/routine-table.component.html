@@ -3,7 +3,7 @@
     <!-- Columna izquierda -->
     <div class="left-column">
       <ng-container *ngFor="let routine of savedRoutines; let i = index">
-        <div *ngIf="i % 2 === 0" class="routine-card" [class.fade-in-left]="i % 2 === 0">
+        <div *ngIf="i % 2 === 0" class="routine-card animate__animated animate__fadeInLeft">
           <div class="card-content">
             <h5>{{ routine.exerciseName }}</h5>
             <p>
@@ -22,7 +22,7 @@
     <!-- Columna derecha -->
     <div class="right-column">
       <ng-container *ngFor="let routine of savedRoutines; let i = index">
-        <div *ngIf="i % 2 !== 0" class="routine-card" [class.fade-in-right]="i % 2 === 1">
+        <div *ngIf="i % 2 !== 0" class="routine-card animate__animated animate__fadeInRight">
           <div class="card-content">
             <h5>{{ routine.exerciseName }}</h5>
             <p>
