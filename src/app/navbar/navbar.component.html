@@ -1,13 +1,50 @@
-<nav class="navbar navbar-expand-lg navbar-dark" style="background-color: rgba(255, 0, 0, 0.49);">
+<nav class="navbar navbar-expand-lg navbar-dark fixed-top">
   <div class="container-fluid">
-    <a class="navbar-brand text-black" href="#">Fitness</a>
-    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+    <a class="navbar-brand fitness-tracking-brand" href="#">Fitness Tracking</a>
+    <button
+      class="navbar-toggler"
+      type="button"
+      data-bs-toggle="collapse"
+      data-bs-target="#navbarNav"
+      aria-controls="navbarNav"
+      aria-expanded="false"
+      aria-label="Toggle navigation"
+    >
       <span class="navbar-toggler-icon"></span>
     </button>
     <div class="collapse navbar-collapse" id="navbarNav">
-      <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-        <li class="nav-item" *ngIf="isAuthenticated()">
-          <button class="btn btn-danger" (click)="onLogout()">Cerrar Sesión</button>
+      <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
+        <!-- Menú Rutinas -->
+        <li class="nav-item dropdown">
+          <a
+            class="nav-link dropdown-toggle"
+            href="#"
+            id="navbarDropdown"
+            role="button"
+            data-bs-toggle="dropdown"
+            aria-expanded="false"
+          >
+            Rutinas
+          </a>
+          <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
+            <li><a class="dropdown-item" href="#routine-creation">Crear Rutinas</a></li>
+            <li><a class="dropdown-item" href="#saved-routines">Rutinas Guardadas</a></li>
+          </ul>
+        </li>
+
+        <!-- Calculadora IMC -->
+        <li class="nav-item">
+          <a class="nav-link" href="#imc-calculator">Calculadora IMC</a>
+        </li>
+
+        <!-- Frases motivacionales -->
+        <li class="nav-item">
+          <a class="nav-link" href="#motivational-phrases">Frases Motivacionales</a>
+        </li>
+
+        <!-- Botón Cerrar Sesión -->
+        <li class="nav-item">
+          <button class="btn btn-danger ms-3" (click)="onLogout()">Cerrar Sesión</button>
         </li>
       </ul>
     </div>

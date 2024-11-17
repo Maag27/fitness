@@ -1,46 +1,137 @@
-<div class="container mt-4">
-  <h2 class="text-danger mb-4">Métricas del Usuario</h2>
+<div class="container-fluid home-container mt-4">
+  <!-- Sección de Métricas del Usuario -->
+  <section class="user-metrics-section" id="user-metrics">
+    <h2 class="section-title">Métricas del Usuario</h2>
 
-  <form (ngSubmit)="onSubmit()" class="row gx-3 gy-2 align-items-center">
-    <div class="col-md-6">
-      <label for="nombre" class="form-label text-danger">Nombre:</label>
-      <input type="text" id="nombre" [(ngModel)]="nombre" name="nombre" class="form-control" [readonly]="!isEditing">
-    </div>
-    <div class="col-md-6">
-      <label for="apellido" class="form-label text-danger">Apellido:</label>
-      <input type="text" id="apellido" [(ngModel)]="apellido" name="apellido" class="form-control" [readonly]="!isEditing">
-    </div>
-    <div class="col-md-4">
-      <label for="edad" class="form-label text-danger">Edad:</label>
-      <input type="number" id="edad" [(ngModel)]="edad" name="edad" class="form-control" [readonly]="!isEditing">
-    </div>
-    <div class="col-md-4">
-      <label for="altura" class="form-label text-danger">Altura (cm):</label>
-      <input type="number" id="altura" [(ngModel)]="altura" name="altura" class="form-control" [readonly]="!isEditing">
-    </div>
-    <div class="col-md-4">
-      <label for="peso" class="form-label text-danger">Peso (kg):</label>
-      <input type="number" id="peso" [(ngModel)]="peso" name="peso" class="form-control" [readonly]="!isEditing">
-    </div>
-    <div class="col-12 text-end mt-3">
-      <button type="button" class="btn btn-outline-danger me-2" (click)="toggleEdit()" *ngIf="!isEditing">Editar</button>
-      <button type="submit" class="btn btn-danger" *ngIf="isEditing">Guardar Cambios</button>
-    </div>
-  </form>
+    <form (ngSubmit)="onSubmit()" class="row gx-3 gy-2 align-items-center metrics-form">
+      <!-- Campo Nombre -->
+      <div class="col-md-6">
+        <label for="nombre" class="form-label text-danger">Nombre:</label>
+        <input
+          type="text"
+          id="nombre"
+          [(ngModel)]="nombre"
+          name="nombre"
+          class="form-control"
+          [readonly]="!isEditing"
+        />
+      </div>
 
-  <app-motivational-phrases></app-motivational-phrases>
-  <app-calculator-imc></app-calculator-imc>
+      <!-- Campo Apellido -->
+      <div class="col-md-6">
+        <label for="apellido" class="form-label text-danger">Apellido:</label>
+        <input
+          type="text"
+          id="apellido"
+          [(ngModel)]="apellido"
+          name="apellido"
+          class="form-control"
+          [readonly]="!isEditing"
+        />
+      </div>
 
-  <!-- Formulario de creación de rutinas -->
-  <div class="row mb-4">
-    <div class="col-md-12">
-      <app-carbox (routineCreated)="onRoutineCreated($event)"></app-carbox>
-    </div>
-  </div>
+      <!-- Campo Edad -->
+      <div class="col-md-4">
+        <label for="edad" class="form-label text-danger">Edad:</label>
+        <input
+          type="number"
+          id="edad"
+          [(ngModel)]="edad"
+          name="edad"
+          class="form-control"
+          [readonly]="!isEditing"
+        />
+      </div>
 
-  <!-- Sección de rutinas guardadas -->
+      <!-- Campo Altura -->
+      <div class="col-md-4">
+        <label for="altura" class="form-label text-danger">Altura (cm):</label>
+        <input
+          type="number"
+          id="altura"
+          [(ngModel)]="altura"
+          name="altura"
+          class="form-control"
+          [readonly]="!isEditing"
+        />
+      </div>
 
-        <app-routine-table 
-          [savedRoutines]="savedRoutines" 
-          (deleteRoutineEvent)="onDeleteRoutine($event)">
-        </app-routine-table>
+      <!-- Campo Peso -->
+      <div class="col-md-4">
+        <label for="peso" class="form-label text-danger">Peso (kg):</label>
+        <input
+          type="number"
+          id="peso"
+          [(ngModel)]="peso"
+          name="peso"
+          class="form-control"
+          [readonly]="!isEditing"
+        />
+      </div>
+
+      <!-- Botones y mensajes de estado -->
+      <div class="col-12 d-flex justify-content-end align-items-center mt-3">
+        <!-- Mensajes de estado al lado izquierdo -->
+        <div class="status-message me-3">
+          <ng-container *ngIf="isLoading">
+            <div class="spinner-border text-danger" role="status">
+              <span class="visually-hidden">Cargando...</span>
+            </div>
+            <p class="d-inline-block text-danger ms-2 mb-0">Cargando...</p>
+          </ng-container>
+          <ng-container *ngIf="isEditing && !isLoading">
+            <p class="d-inline-block text-warning ms-2 mb-0">Editando...</p>
+          </ng-container>
+          <ng-container *ngIf="saveSuccessful">
+            <p class="d-inline-block text-success ms-2 mb-0">Cambios exitosos</p>
+          </ng-container>
+        </div>
+
+        <!-- Botón Editar -->
+        <button
+          type="button"
+          class="btn btn-outline-danger me-3"
+          (click)="toggleEdit()"
+          *ngIf="!isEditing"
+        >
+          Editar
+        </button>
+
+        <!-- Botón Guardar Cambios -->
+        <button
+          type="submit"
+          class="btn btn-danger"
+          *ngIf="isEditing"
+        >
+          Guardar Cambios
+        </button>
+      </div>
+    </form>
+  </section>
+
+  <!-- Sección de Frases Motivacionales -->
+  <section class="motivational-section" id="motivational-phrases">
+    <app-motivational-phrases></app-motivational-phrases>
+  </section>
+
+  <!-- Sección de Calculadora IMC -->
+  <section class="calculator-section" id="imc-calculator">
+    <h2 class="section-title text-center">Calculadora IMC</h2>
+    <app-calculator-imc></app-calculator-imc>
+  </section>
+
+  <!-- Sección de Creación de Rutinas -->
+  <section class="routine-creation-section" id="routine-creation">
+    <h2 class="section-title text-center">Crear Rutinas</h2>
+    <app-carbox (routineCreated)="onRoutineCreated($event)"></app-carbox>
+  </section>
+
+  <!-- Sección de Rutinas Guardadas -->
+  <section class="saved-routines-section" id="saved-routines">
+    <h2 class="section-title text-center">Rutinas Guardadas</h2>
+    <app-routine-table
+      [savedRoutines]="savedRoutines"
+      (deleteRoutineEvent)="onDeleteRoutine($event)"
+    ></app-routine-table>
+  </section>
+</div>

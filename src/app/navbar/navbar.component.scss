@@ -1,0 +1,59 @@
+.navbar {
+    background-color: #000 !important; // Fondo negro
+    
+    .navbar-brand,
+    .nav-link {
+      color: #fff !important; // Texto blanco
+      &:hover {
+        color: #ff6347 !important; // Hover rojo
+      }
+    }
+  
+    .fitness-tracking-brand {
+      font-family: 'Impact', sans-serif; // Aplicamos la fuente Impact
+      font-size: 1.5rem; // Ajustamos tamaño para que destaque
+      text-transform: uppercase; // Texto en mayúsculas para más estilo
+    }
+  
+    .dropdown-menu {
+      background-color: #000; // Fondo negro del menú desplegable
+      .dropdown-item {
+        color: #fff; // Texto blanco
+        &:hover {
+          background-color: #ff6347; // Fondo rojo en hover
+          color: #fff;
+        }
+      }
+    }
+  
+    .btn-danger {
+      color: #fff;
+      background-color: #ff0000;
+      border-color: #ff0000;
+      &:hover {
+        background-color: #cc0000;
+        border-color: #cc0000;
+      }
+    }
+  }
+  
+  // Animaciones
+  #motivational-phrases,
+  #imc-calculator {
+    transition: transform 0.3s, box-shadow 0.3s;
+    &:hover {
+      transform: scale(1.05);
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+    }
+  }
+  
+  // Responsividad
+  @media (max-width: 768px) {
+    .navbar-nav {
+      text-align: center;
+    }
+    .btn-danger {
+      margin-top: 10px;
+    }
+  }
+  

@@ -1,0 +1,102 @@
+// Fondo general
+body {
+    background: url('/assets/images/gym-background.jpg') no-repeat center center fixed;
+    background-size: cover;
+    font-family: 'Impact', sans-serif;
+  }
+  
+  // Contenedor principal
+  .home-container {
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+    padding: 1rem;
+    position: relative;
+  
+    section {
+      background: #0000; // Fondo negro con opacidad
+      padding: 2rem;
+      border-radius: 8px;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+      color: #fff;
+      position: relative;
+      z-index: 1; 
+  
+      @media (max-width: 768px) {
+        margin: 0 auto;
+        text-align: center;
+      }
+    }
+  
+    // Métricas del Usuario
+    .user-metrics-section {
+      width: 40%; // Alineado a la izquierda en escritorio
+      position: relative;
+      margin-top: 2rem;
+  
+      @media (max-width: 768px) {
+        width: 100%;
+        position: static;
+      }
+    }
+  
+    // Títulos de las secciones
+    .section-title {
+      font-family: 'Impact', sans-serif; // Fuente tipo gimnasio
+      color: #ff0000; // Rojo
+      text-transform: uppercase;
+      margin-bottom: 1rem;
+      text-align: center;
+    }
+  
+    // Frases Motivacionales
+    .motivational-section {
+        margin-top: 4rem;
+        z-index: 0;
+        animation: fade-in 0.5s ease-in-out;
+    }
+  
+    // Calculadora IMC
+    .calculator-section {
+      animation: slide-up 0.5s ease-in-out;
+    }
+  
+    // Rutinas
+    .routine-creation-section,
+    .saved-routines-section {
+      animation: slide-left 0.5s ease-in-out;
+    }
+  }
+  
+  // Animaciones
+  @keyframes fade-in {
+    from {
+      opacity: 0;
+    }
+    to {
+      opacity: 1;
+    }
+  }
+  
+  @keyframes slide-up {
+    from {
+      transform: translateY(20px);
+      opacity: 0;
+    }
+    to {
+      transform: translateY(0);
+      opacity: 1;
+    }
+  }
+  
+  @keyframes slide-left {
+    from {
+      transform: translateX(-20px);
+      opacity: 0;
+    }
+    to {
+      transform: translateX(0);
+      opacity: 1;
+    }
+  }
+  

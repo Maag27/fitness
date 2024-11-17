@@ -8,7 +8,6 @@ import { CarboxComponent } from '../carbox/carbox.component';
 import { MetricsService } from '../services/metrics.service';
 import { RoutineTableComponent } from '../routine-table/routine-table.component';
 
-
 @Component({
   selector: 'app-home',
   standalone: true,
@@ -33,6 +32,9 @@ export class HomeComponent implements OnInit {
   estadisticas: any;
   isEditing: boolean = false;
 
+  isLoading: boolean = false; // Indicador de carga
+  saveSuccessful: boolean = false; // Indicador de éxito
+
   constructor(private metricsService: MetricsService, private authService: AuthService) {}
 
   // Método para recibir nuevas rutinas desde CarboxComponent
@@ -51,14 +53,17 @@ export class HomeComponent implements OnInit {
 
   // Cargar métricas del usuario autenticado
   loadUserMetrics(): void {
+    this.isLoading = true; // Activar indicador de carga
     const userId = this.authService.getUserId();
     if (!userId) {
       console.error('Usuario no autenticado');
+      this.isLoading = false;
       return;
     }
 
     this.metricsService.getUserMetrics(userId).subscribe(
       (data: any) => {
+        this.isLoading = false; // Desactivar indicador de carga
         if (data && data.length > 0) {
           const metrics = data[0];
           this.nombre = metrics.nombre || '';
@@ -71,15 +76,21 @@ export class HomeComponent implements OnInit {
           console.warn('No se encontraron métricas para el usuario.');
         }
       },
-      (error: any) => console.error('Error al cargar las métricas:', error)
+      (error: any) => {
+        this.isLoading = false; // Desactivar indicador de carga
+        console.error('Error al cargar las métricas:', error);
+      }
     );
   }
 
   // Guardar o actualizar métricas
   saveUserMetrics(): void {
+    this.isLoading = true; // Activar indicador de carga
+    this.saveSuccessful = false; // Resetear indicador de éxito
     const userId = this.authService.getUserId();
     if (!userId) {
       console.error('Usuario no autenticado');
+      this.isLoading = false;
       return;
     }
 
@@ -93,15 +104,26 @@ export class HomeComponent implements OnInit {
 
     this.metricsService.addUserMetric(userId, userMetric).subscribe(
       () => {
-        this.loadUserMetrics();
+        this.loadUserMetrics(); // Recargar métricas
         this.isEditing = false;
+        this.isLoading = false; // Desactivar indicador de carga
+        this.saveSuccessful = true; // Activar indicador de éxito
+        setTimeout(() => {
+          this.saveSuccessful = false; // Ocultar mensaje de éxito después de 3 segundos
+        }, 3000);
       },
-      (error: any) => console.error('Error al guardar métricas:', error)
+      (error: any) => {
+        this.isLoading = false; // Desactivar indicador de carga
+        console.error('Error al guardar métricas:', error);
+      }
     );
   }
 
   toggleEdit(): void {
     this.isEditing = !this.isEditing;
+    if (this.isEditing) {
+      this.saveSuccessful = false; // Resetear éxito al comenzar edición
+    }
   }
 
   onSubmit(): void {

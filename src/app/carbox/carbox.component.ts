@@ -11,7 +11,7 @@ import { CommonModule } from '@angular/common';
   styleUrls: ['./carbox.component.scss'],
 })
 export class CarboxComponent implements OnInit {
-  @Output() routineCreated = new EventEmitter<any>(); // Emisor para enviar rutinas al componente padre
+  @Output() routineCreated = new EventEmitter<any>();
   routineForm: FormGroup;
   muscleGroups: any[] = [];
   availableExercises: any[] = [];
@@ -44,6 +44,11 @@ export class CarboxComponent implements OnInit {
           series: details?.series || '',
           restTime: details?.restTime || '',
         });
+
+        // Habilitar los campos una vez que se selecciona un ejercicio
+        this.routineForm.get('repetitions')?.enable();
+        this.routineForm.get('series')?.enable();
+        this.routineForm.get('restTime')?.enable();
       }
     });
   }
@@ -68,6 +73,11 @@ export class CarboxComponent implements OnInit {
   }
 
   saveRoutine() {
+    // Habilitar los campos antes de obtener los valores del formulario
+    this.routineForm.get('repetitions')?.enable();
+    this.routineForm.get('series')?.enable();
+    this.routineForm.get('restTime')?.enable();
+
     const selectedExercise = this.availableExercises.find(e => e.id === +this.routineForm.value.exercise);
     const muscleGroupName = this.muscleGroups.find(g => g.id === +this.routineForm.value.muscleGroup)?.name;
 
@@ -80,7 +90,12 @@ export class CarboxComponent implements OnInit {
       restTime: this.routineForm.value.restTime,
     };
 
-    this.routineCreated.emit(newRoutine); // Emitir rutina creada
+    this.routineCreated.emit(newRoutine);
     this.routineForm.reset({ muscleGroup: '', exercise: '' });
+
+    // Volver a deshabilitar los campos
+    this.routineForm.get('repetitions')?.disable();
+    this.routineForm.get('series')?.disable();
+    this.routineForm.get('restTime')?.disable();
   }
 }
