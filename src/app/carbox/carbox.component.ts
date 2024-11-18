@@ -1,6 +1,7 @@
 import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { RoutinesService } from '../services/routines.service';
+import { AuthService } from '../services/auth.service';
 import { CommonModule } from '@angular/common';
 
 @Component({
@@ -12,27 +13,30 @@ import { CommonModule } from '@angular/common';
 })
 export class CarboxComponent implements OnInit {
   @Output() routineCreated = new EventEmitter<any>();
-  routineForm: FormGroup;
-  muscleGroups: any[] = [];
-  availableExercises: any[] = [];
+  routineForm: FormGroup; // Formulario reactivo
+  muscleGroups: any[] = []; // Lista de grupos musculares
+  availableExercises: any[] = []; // Lista de ejercicios disponibles
 
-  constructor(private fb: FormBuilder, private routinesService: RoutinesService) {
+  constructor(
+    private fb: FormBuilder,
+    private routinesService: RoutinesService,
+    private authService: AuthService
+  ) {
     this.routineForm = this.fb.group({
-      muscleGroup: [''],
-      exercise: [''],
-      repetitions: [{ value: '', disabled: true }],
-      series: [{ value: '', disabled: true }],
-      restTime: [{ value: '', disabled: true }],
+      muscleGroup: [''], // Grupo muscular seleccionado
+      exercise: [''], // Ejercicio seleccionado
+      repetitions: [{ value: '', disabled: true }], // Repeticiones del ejercicio
+      series: [{ value: '', disabled: true }], // Series del ejercicio
+      restTime: [{ value: '', disabled: true }], // Tiempo de descanso
     });
   }
 
   ngOnInit() {
     this.loadMuscleGroups();
-
-    this.routineForm.get('muscleGroup')?.valueChanges.subscribe(groupId => {
+    this.routineForm.get('muscleGroup')?.valueChanges.subscribe((groupId) => {
       if (groupId) this.loadExercisesForMuscleGroup(groupId);
       else this.availableExercises = [];
-      this.routineForm.patchValue({ exercise: '', repetitions: '', series: '', restTime: '' });
+      this.resetExerciseFields();
     });
 
     this.routineForm.get('exercise')?.valueChanges.subscribe((exerciseId: string | number) => {
@@ -44,15 +48,14 @@ export class CarboxComponent implements OnInit {
           series: details?.series || '',
           restTime: details?.restTime || '',
         });
-
-        // Habilitar los campos una vez que se selecciona un ejercicio
-        this.routineForm.get('repetitions')?.enable();
-        this.routineForm.get('series')?.enable();
-        this.routineForm.get('restTime')?.enable();
+        this.enableExerciseFields();
       }
     });
   }
 
+  /**
+   * Carga los grupos musculares desde el servicio.
+   */
   loadMuscleGroups() {
     this.routinesService.getRoutineTemplates().subscribe((data: any[]) => {
       this.muscleGroups = data.map((routine: any) => ({
@@ -62,6 +65,11 @@ export class CarboxComponent implements OnInit {
     });
   }
 
+  /**
+   * Carga los ejercicios de un grupo muscular específico.
+   * 
+   * @param muscleGroupId El ID del grupo muscular seleccionado.
+   */
   loadExercisesForMuscleGroup(muscleGroupId: number) {
     this.routinesService.getExercisesByRoutineTemplateId(muscleGroupId).subscribe((data: any[]) => {
       this.availableExercises = data.map((ex: any) => ({
@@ -72,30 +80,54 @@ export class CarboxComponent implements OnInit {
     });
   }
 
-  saveRoutine() {
-    // Habilitar los campos antes de obtener los valores del formulario
+  /**
+   * Guarda una nueva rutina personalizada para el usuario autenticado.
+   */
+    saveRoutine() {
+      const userId = this.authService.getUserId(); // Obtener el ID del usuario autenticado
+    
+      if (!userId) {
+        console.error('Error: Usuario no autenticado.');
+        return;
+      }
+    
+      const muscleGroupId = this.routineForm.value.muscleGroup;
+      const exerciseId = this.routineForm.value.exercise; // Obtener el ID del ejercicio seleccionado
+    
+      this.routinesService.createUserRoutine(userId, muscleGroupId, exerciseId).subscribe({
+        next: (createdRoutine) => {
+          this.routineCreated.emit(createdRoutine); // Notifica que la rutina fue creada
+          this.resetRoutineForm(); // Reinicia el formulario
+        },
+        error: (err) => console.error('Error creando la rutina:', err),
+      });
+    }
+  
+
+  resetRoutineForm() {
+    this.routineForm.reset({ muscleGroup: '', exercise: '' });
+    this.disableExerciseFields();
+  }
+
+  enableExerciseFields() {
     this.routineForm.get('repetitions')?.enable();
     this.routineForm.get('series')?.enable();
     this.routineForm.get('restTime')?.enable();
+  }
 
-    const selectedExercise = this.availableExercises.find(e => e.id === +this.routineForm.value.exercise);
-    const muscleGroupName = this.muscleGroups.find(g => g.id === +this.routineForm.value.muscleGroup)?.name;
-
-    const newRoutine = {
-      id: Date.now(),
-      muscleGroupName: muscleGroupName || '',
-      exerciseName: selectedExercise?.name || '',
-      repetitions: this.routineForm.value.repetitions,
-      series: this.routineForm.value.series,
-      restTime: this.routineForm.value.restTime,
-    };
-
-    this.routineCreated.emit(newRoutine);
-    this.routineForm.reset({ muscleGroup: '', exercise: '' });
-
-    // Volver a deshabilitar los campos
+  disableExerciseFields() {
     this.routineForm.get('repetitions')?.disable();
     this.routineForm.get('series')?.disable();
     this.routineForm.get('restTime')?.disable();
+  }
+
+  resetExerciseFields() {
+    this.routineForm.patchValue({
+      exercise: '',
+      repetitions: '',
+      series: '',
+      restTime: '',
+    });
+    this.disableExerciseFields();
   }
 }

@@ -5,12 +5,13 @@
       <ng-container *ngFor="let routine of savedRoutines; let i = index">
         <div *ngIf="i % 2 === 0" class="routine-card animate__animated animate__fadeInLeft">
           <div class="card-content">
-            <h5>{{ routine.exerciseName }}</h5>
+            <h5>Grupo Muscular</h5>
+            <h5>{{ routine.routineName }}</h5>
             <p>
-              <strong>Grupo Muscular:</strong> {{ routine.muscleGroupName }}<br />
-              <strong>Repeticiones:</strong> {{ routine.repetitions || 'N/A' }}<br />
-              <strong>Series:</strong> {{ routine.series || 'N/A' }}<br />
-              <strong>Descanso:</strong> {{ routine.restTime || 'N/A' }}
+              <strong>Ejercicio:</strong> {{ routine.exerciseName }}<br />
+              <strong>Repeticiones:</strong> {{ routine.repetitions }}<br />
+              <strong>Series:</strong> {{ routine.series }}<br />
+              <strong>Descanso:</strong> {{ routine.restTime }}
             </p>
             <button class="btn btn-warning btn-sm me-2" (click)="editRoutine(routine)">Editar</button>
             <button class="btn btn-danger btn-sm" (click)="deleteRoutine(routine.id)">Eliminar</button>
@@ -24,12 +25,13 @@
       <ng-container *ngFor="let routine of savedRoutines; let i = index">
         <div *ngIf="i % 2 !== 0" class="routine-card animate__animated animate__fadeInRight">
           <div class="card-content">
-            <h5>{{ routine.exerciseName }}</h5>
+            <h5>Grupo Muscular</h5>
+            <h5>{{ routine.routineName }}</h5>
             <p>
-              <strong>Grupo Muscular:</strong> {{ routine.muscleGroupName }}<br />
-              <strong>Repeticiones:</strong> {{ routine.repetitions || 'N/A' }}<br />
-              <strong>Series:</strong> {{ routine.series || 'N/A' }}<br />
-              <strong>Descanso:</strong> {{ routine.restTime || 'N/A' }}
+              <strong>Ejercicio:</strong> {{ routine.exerciseName }}<br />
+              <strong>Repeticiones:</strong> {{ routine.repetitions }}<br />
+              <strong>Series:</strong> {{ routine.series }}<br />
+              <strong>Descanso:</strong> {{ routine.restTime }}
             </p>
             <button class="btn btn-warning btn-sm me-2" (click)="editRoutine(routine)">Editar</button>
             <button class="btn btn-danger btn-sm" (click)="deleteRoutine(routine.id)">Eliminar</button>
