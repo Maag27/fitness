@@ -1,14 +1,64 @@
 <div class="container">
-  <h3>Crear Nueva Rutina</h3>
-  <form [formGroup]="routineForm" (ngSubmit)="saveRoutine()">
-    <select id="muscleGroup" formControlName="muscleGroup" class="form-control mb-2">
-      <option value="">Selecciona un grupo muscular</option>
-      <option *ngFor="let group of muscleGroups" [value]="group.id">{{ group.name }}</option>
-    </select>
-    <select id="exercise" formControlName="exercise" class="form-control mb-2">
-      <option value="">Selecciona un ejercicio</option>
-      <option *ngFor="let exercise of availableExercises" [value]="exercise.id">{{ exercise.name }}</option>
-    </select>
-    <button type="submit" class="btn btn-primary w-100">Guardar</button>
+  <h3 class="mb-3">Crear Nueva Rutina</h3>
+
+  <!-- Formulario -->
+  <form [formGroup]="routineForm" (ngSubmit)="saveRoutine()" class="needs-validation">
+    <!-- Grupo Muscular -->
+    <div class="form-group animate__animated animate__fadeInLeft">
+      <label for="muscleGroup">Grupo Muscular:</label>
+      <select
+        id="muscleGroup"
+        formControlName="muscleGroup"
+        class="form-control mb-2"
+        [ngClass]="{'is-invalid': routineForm.get('muscleGroup')?.invalid && routineForm.get('muscleGroup')?.touched}"
+      >
+        <option value="">Selecciona un grupo muscular</option>
+        <option *ngFor="let group of muscleGroups" [value]="group.id">{{ group.name }}</option>
+      </select>
+      <!-- Mensaje de error -->
+      <div *ngIf="routineForm.get('muscleGroup')?.invalid && routineForm.get('muscleGroup')?.touched" class="text-danger">
+        El grupo muscular es obligatorio.
+      </div>
+    </div>
+
+    <!-- Ejercicio -->
+    <div class="form-group animate__animated animate__fadeInRight">
+      <label for="exercise">Ejercicio:</label>
+      <select
+        id="exercise"
+        formControlName="exercise"
+        class="form-control mb-2"
+        [ngClass]="{'is-invalid': routineForm.get('exercise')?.invalid && routineForm.get('exercise')?.touched}"
+      >
+        <option value="">Selecciona un ejercicio</option>
+        <option *ngFor="let exercise of availableExercises" [value]="exercise.id">{{ exercise.name }}</option>
+      </select>
+      <!-- Mensaje de error -->
+      <div *ngIf="routineForm.get('exercise')?.invalid && routineForm.get('exercise')?.touched" class="text-danger">
+        El ejercicio es obligatorio.
+      </div>
+    </div>
+
+    <!-- Botón Guardar -->
+    <button
+      type="submit"
+      class="btn btn-primary w-100 mt-3 animate__animated animate__pulse"
+      [disabled]="isLoading || routineForm.invalid"
+    >
+      Guardar
+    </button>
+
+    <!-- Estado de carga -->
+    <div *ngIf="isLoading" class="text-center mt-3">
+      <div class="spinner-border text-primary" role="status">
+        <span class="visually-hidden">Cargando...</span>
+      </div>
+      <p class="text-primary">Creando rutina...</p>
+    </div>
+
+    <!-- Mensaje de éxito -->
+    <div *ngIf="saveSuccessful" class="text-center mt-3">
+      <p class="text-success animate__animated animate__fadeIn">¡Rutina creada exitosamente!</p>
+    </div>
   </form>
 </div>
