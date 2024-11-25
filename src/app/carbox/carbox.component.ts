@@ -111,7 +111,7 @@ export class CarboxComponent implements OnInit {
         this.saveSuccessful = true; // Muestra mensaje de éxito
         this.routineCreated.emit(createdRoutine);
         this.resetRoutineForm();
-        setTimeout(() => (this.saveSuccessful = false), 3000); // Oculta el mensaje después de 3 segundos
+        setTimeout(() => (this.saveSuccessful = false, window.location.reload()), 3000); // Oculta el mensaje después de 3 segundos
       },
       error: (err) => {
         console.error('Error creando la rutina:', err);
