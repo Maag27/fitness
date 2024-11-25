@@ -55,7 +55,6 @@ export class RoutineTableComponent implements OnInit {
    * @returns Lista de rutinas con nombres y ejercicios formateados.
    */
   async mapRoutinesWithNames(routines: any[]): Promise<any[]> {
-    // Obtener las plantillas de rutinas
     const routineTemplates = await this.routinesService.getRoutineTemplates().toPromise();
   
     if (!routineTemplates || routineTemplates.length === 0) {
@@ -66,13 +65,11 @@ export class RoutineTableComponent implements OnInit {
     const formattedRoutines = [];
   
     for (const routine of routines) {
-      // Buscar el nombre de la rutina
       const routineTemplate = routineTemplates.find(
         (rt: any) => rt.routineTemplateId === routine.routineTemplateId
       );
       const routineName = routineTemplate?.routineName || 'Sin nombre';
   
-      // Obtener los ejercicios asociados a la rutina plantilla
       const exercises = await this.routinesService
         .getExercisesByRoutineTemplateId(routine.routineTemplateId)
         .toPromise();
@@ -82,7 +79,6 @@ export class RoutineTableComponent implements OnInit {
         continue;
       }
   
-      // Mapear ejercicios para incluir el nombre y detalles
       for (const exercise of routine.userExercises) {
         const exerciseTemplate = exercises.find(
           (et: any) => et.exerciseTemplateId === exercise.exerciseTemplateId
@@ -91,19 +87,19 @@ export class RoutineTableComponent implements OnInit {
   
         const details = exercise.userExerciseDetails[0] || {};
         formattedRoutines.push({
-          userRoutineId: routine.userRoutineId,
+          userRoutineId: routine.userRoutineId, // ID de la rutina personalizada
           routineName,
           exerciseName,
           repetitions: details.repetitions || 'N/A',
           series: details.series || 'N/A',
           restTime: details.restTime || 'N/A',
-          id: exercise.userExerciseId,
         });
       }
     }
   
     return formattedRoutines;
   }
+
   /**
    * Maneja la edición de una rutina.
    * 
@@ -111,7 +107,7 @@ export class RoutineTableComponent implements OnInit {
    */
   editRoutine(routine: any) {
     const updatedRoutine = { ...routine }; // Clonar la rutina para editarla
-    this.routinesService.editUserRoutine(updatedRoutine.id, updatedRoutine).subscribe({
+    this.routinesService.editUserRoutine(updatedRoutine.userRoutineId, updatedRoutine).subscribe({
       next: () => this.loadUserRoutines(), // Recargar las rutinas después de editar
       error: (error) => console.error('Error actualizando la rutina:', error),
     });
@@ -120,12 +116,12 @@ export class RoutineTableComponent implements OnInit {
   /**
    * Maneja la eliminación de una rutina.
    * 
-   * @param routineId El ID de la rutina que se desea eliminar.
+   * @param userRoutineId El ID de la rutina personalizada que se desea eliminar.
    */
-  deleteRoutine(routineId: number) {
-    this.routinesService.deleteUserRoutine(routineId).subscribe({
+  deleteRoutine(userRoutineId: number) {
+    this.routinesService.deleteUserRoutine(userRoutineId).subscribe({
       next: () => {
-        this.savedRoutines = this.savedRoutines.filter((r) => r.id !== routineId); // Filtrar la rutina eliminada
+        this.savedRoutines = this.savedRoutines.filter((r) => r.userRoutineId !== userRoutineId); // Filtrar la rutina eliminada
         this.routinesUpdated.emit(this.savedRoutines); // Emitir el evento de actualización
       },
       error: (error) => console.error('Error eliminando la rutina:', error),
